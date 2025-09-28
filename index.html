@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Times</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Movie Times</h1>
+        <form id="search-form">
+            <input type="text" id="search-input" placeholder="Search movies"/>
+            <button type="submit">Search</button>
+        </form>
+    </header>
+
+    <main>
+        <div id="gallery"></div>
+        <div id="pagination"></div>
+    </main>
+
+    <section id="movie-details">
+        <div class="modal-content">
+            <span id="close-modal">&times;</span>
+            <div id="movie-info"></div>
+        </div>
+    </section>
+
+    <script src="app.js" type="modal"></script>
+</body>
+</html>
