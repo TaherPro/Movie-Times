@@ -1,5 +1,5 @@
-// const API_KEY = "";
-// const BASE_URL = "";
+const API_KEY = "96ed179a2a60ce6fcb6ef7ae334926a3";
+const BASE_URL = "https://api.themoviedb.org/3";
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
@@ -13,37 +13,38 @@ let currentQuery = "";
 let currentPage = 1;
 let totalPages = 1;
 
+// api functions
 async function searchMovies(query, page = 1) {
-    try {
-        const res = await fetch(`${BASE_URL}/seach/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}`);
-        if (!res.ok) throw("Faild to fetch movies");
-        return await res.json();
-    } catch (err) {
-        console.err(err);
-        return {results: [], total_pages: 0};
-    }
+  try {
+    const res = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}`);
+    if (!res.ok) throw new Error("Failed to fetch movies");
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return { results: [], total_pages: 0 };
+  }
 }
 
 async function getPopularMovies(page = 1) {
-    try {
-        const res = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
-        if (!res.ok) throw(`Failed to fetch popular movies`);
-        return await res.json();
-    } catch (err) {
-        console.err(err);
-        return { results: [], total_pages: 0};;
-    }
+  try {
+    const res = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
+    if (!res.ok) throw new Error("Failed to fetch popular movies");
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return { results: [], total_pages: 0 };
+  }
 }
 
 async function getMovieDetails(id) {
-    try {
-        const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
-        if (!res.ok) throw ("Faild to fetch movie details");
-        return await res.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
+  try {
+    const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+    if (!res.ok) throw new Error("Failed to fetch movie details");
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 }
 // ui functions
 function renderMovies(movies) {
@@ -52,7 +53,8 @@ function renderMovies(movies) {
             <img src="${movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://via.palceholder.com/200x300?text=No+Image'}" alt="${movie.title}" />
             <h3>${movie.title}</h3>
             <p> ${movie.vote_average}</p>
-        </div>`).join("");
+        </div>
+        `).join("");
 }
 
 

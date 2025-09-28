@@ -1,5 +1,5 @@
-// const API_KEY = "";
-// const BASE_URL = "";
+const API_KEY = "96ed179a2a60ce6fcb6ef7ae334926a3";
+const BASE_URL = "https://api.themoviedb.org/3";
 
 // seach movei by query
 export async function searchMovies(query, page = 1) {
