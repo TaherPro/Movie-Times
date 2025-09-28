@@ -32,6 +32,10 @@ form input, form button {
 }
 
 .movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-card img {
     width: 100%;
     border-radius: 6px;
 }

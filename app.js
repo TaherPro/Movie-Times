@@ -50,9 +50,9 @@ async function getMovieDetails(id) {
 function renderMovies(movies) {
     gallery.innerHTML = movies.map(movie => `
         <div class="movie-card" data-id="${movie.id}">
-            <img src="${movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://via.palceholder.com/200x300?text=No+Image'}" alt="${movie.title}" />
+            <img src="${movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://via.placeholder.com/200x300?text=No+Image'}" alt="${movie.title}" />
             <h3>${movie.title}</h3>
-            <p> ${movie.vote_average}</p>
+            <p>⭐ ${movie.vote_average}</p>
         </div>
         `).join("");
 }
