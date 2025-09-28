@@ -47,5 +47,47 @@ button.page-btn {
 }
 
 .modal {
-    position: fixed;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.7);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+}
+
+#close-modal {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+button.page-btn {
+  margin: 0 5px;
+  padding: 0.5rem 0.8rem;
+  border: none;
+  background: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button.page-btn:hover {
+  background: #ddd;
+}
+
+button.page-btn.active {
+  background: #222;
+  color: #fff;
 }

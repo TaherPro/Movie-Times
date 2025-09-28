@@ -1,6 +1,5 @@
-const API_KEY = "";
-const BASE_URL = "";
-
+// const API_KEY = "";
+// const BASE_URL = "";
 
 // seach movei by query
 export async function searchMovies(query, page = 1) {
