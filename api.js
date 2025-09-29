@@ -4,7 +4,7 @@ const BASE_URL = "https://api.themoviedb.org/3";
 // seach movei by query
 export async function searchMovies(query, page = 1) {
     try {
-        const res = await fetch(`${BASE_URL}/seach/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}`);
+        const res = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}`);
         if (!res.ok) throw (`Faild to fetch movies`);
         return await res.json();
     } catch (err) {

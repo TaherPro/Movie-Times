@@ -1,5 +1,5 @@
-const API_KEY = "96ed179a2a60ce6fcb6ef7ae334926a3";
-const BASE_URL = "https://api.themoviedb.org/3";
+import { searchMovies, getMovieDetails, getPopularMovies } from "./api.js";
+import { renderMovies, renderPagination, showMovieDetails, closeModal } from "./ui.js";
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
@@ -13,84 +13,19 @@ let currentQuery = "";
 let currentPage = 1;
 let totalPages = 1;
 
-// api functions
-async function searchMovies(query, page = 1) {
-  try {
-    const res = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}`);
-    if (!res.ok) throw new Error("Failed to fetch movies");
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    return { results: [], total_pages: 0 };
-  }
-}
-
-async function getPopularMovies(page = 1) {
-  try {
-    const res = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
-    if (!res.ok) throw new Error("Failed to fetch popular movies");
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    return { results: [], total_pages: 0 };
-  }
-}
-
-async function getMovieDetails(id) {
-  try {
-    const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
-    if (!res.ok) throw new Error("Failed to fetch movie details");
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-}
-// ui functions
-function renderMovies(movies) {
-    gallery.innerHTML = movies.map(movie => `
-        <div class="movie-card" data-id="${movie.id}">
-            <img src="${movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://via.placeholder.com/200x300?text=No+Image'}" alt="${movie.title}" />
-            <h3>${movie.title}</h3>
-            <p>⭐ ${movie.vote_average}</p>
-        </div>
-        `).join("");
-}
-
-
-function renderPagination() {
-    pagination.innerHTML = `
-        ${currentPage > 1 ? `<button class="page-btn" data-page="${currentPage-1}">Prev</button>` : ""}
-        <span>Page ${currentPage} of ${totalPages}</span>
-        ${currentPage < totalPages ? `<button class="page-btn" data-page="${currentPage+1}">Next</button>` : ""}`;
- }
-
-function showMovieDetails(movie) {
-  movieInfo.innerHTML = `
-    <h2>${movie.title}</h2>
-    <p><strong>Release:</strong> ${movie.release_date}</p>
-    <p><strong>Rating:</strong> ${movie.vote_average}</p>
-    <p>${movie.overview}</p>`;
-  modal.classList.remove("hidden");
-}
-
-function closeModal() {
-  modal.classList.add("hidden");
-}
-
 // fetch and render
 async function fetchAndRenderMovies() {
     const data = await searchMovies(currentQuery, currentPage);
-    renderMovies(data.results);
+    renderMovies(data.results, gallery);
     totalPages = data.total_pages;
-    renderPagination();
+    renderPagination(currentPage, totalPages, pagination);
 }
 
 async function fetchAndRenderPopular() {
     const data = await getPopularMovies(currentPage);
-    renderMovies(data.results);
+    renderMovies(data.results, gallery);
     totalPages = data.total_pages;
-    renderPagination();
+    renderPagination(currentPage, totalPages, pagination);
 }
 
 // Event Listeners
@@ -115,8 +50,8 @@ gallery.addEventListener("click", async (e) => {
     const card = e.target.closest(".movie-card");
     if (card) {
         const movie = await getMovieDetails(card.dataset.id);
-        if (movie) showMovieDetails(movie);
+        if (movie) showMovieDetails(movie, modal, movieInfo);
     }
 });
 
-closeBtn.addEventListener("click", closeModal);
+closeBtn.addEventListener("click", () => closeModal(modal));
