@@ -1,5 +1,4 @@
-Movie Times 
-This is a web application that lets you search for movies, browse popular titles, and view movie details
+Movie Times is a web application that lets you search for movies, browse popular titles, and view movie details
 
 How to Run Clone this repository or download the files. https://github.com/TaherPro/Movie-Times
 
@@ -11,3 +10,4 @@ Technologies Used
 Future Improvements
 * Show movie trailers
 * Add multi-language
+
